@@ -1,0 +1,77 @@
+name: Floor heating room thermostat
+products:
+  - id: bf6121edd3fa23b0ebrcqx
+    name: SM-PC Voviee-166
+primary_entity:
+  entity: climate
+  translation_only_key: thermostat
+  dps:
+    - id: 1
+      type: boolean
+      name: hvac_mode
+      mapping:
+        - dps_val: false
+          value: "off"
+        - dps_val: true
+          constraint: mode
+          conditions:
+            - dps_val: auto
+              value: auto
+            - dps_val: manual
+              value: heat
+    - id: 2
+      type: string
+      name: mode
+      hidden: true
+    - id: 16
+      type: integer
+      name: temperature
+      unit: C
+      range:
+        min: 50
+        max: 350
+      mapping:
+        - scale: 10
+          step: 5
+    - id: 24
+      type: integer
+      name: current_temperature
+      mapping:
+        - unit: C
+          scale: 10
+    - id: 36
+      type: string
+      name: State of the valve
+    - id: 2
+      type: string
+      name: mode
+      mapping:
+        - dps_val: Manu
+          value: Manual
+        - dps_val: Auto
+          value: Auto
+secondary_entities:
+  - entity: switch
+    translation_key: anti_frost
+    category: config
+    dps:
+      - id: 10
+        type: boolean
+        name: switch
+        optional: true
+        mapping:
+          - dps_val: null
+            value: false
+            hidden: true
+  - entity: lock
+    translation_key: child_lock
+    category: config
+    dps:
+      - id: 40
+        type: boolean
+        name: lock
+        optional: true
+        mapping:
+          - dps_val: null
+            value: false
+            hidden: true
